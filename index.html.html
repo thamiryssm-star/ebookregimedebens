@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regimes de Bens no Casamento — Thamirys Silvera Martin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F3F2E9;
+    --cream-dark: #E8E6D8;
+    --sage: #9BAA87;
+    --sage-light: #b8c4a6;
+    --sage-dark: #7a8f68;
+    --bronze: #B29E78;
+    --bronze-light: #cdbea0;
+    --charcoal: #1a1a1a;
+    --charcoal-mid: #3d3d3d;
+    --charcoal-light: #6b6b6b;
+    --white: #FAFAF6;
+    --sidebar-w: 280px;
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-theme="dark"] {
+    --cream: #1e1e18;
+    --cream-dark: #2a2a22;
+    --sage: #7a9068;
+    --sage-light: #8fa47d;
+    --sage-dark: #6a7d5a;
+    --bronze: #9a8562;
+    --bronze-light: #b09a78;
+    --charcoal: #e8e6d8;
+    --charcoal-mid: #c8c5b5;
+    --charcoal-light: #9a9880;
+    --white: #161610;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--sage), var(--bronze));
+    width: 0%; z-index: 9999;
+    transition: width 0.1s linear;
+  }
+
+  /* COVER */
+  #cover {
+    position: relative; width: 100%; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    background: var(--charcoal);
+    overflow: hidden;
+    padding: 80px 40px;
+  }
+  #cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(155,170,135,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(178,158,120,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='80' cy='0' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='0' cy='80' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='80' cy='80' r='1.5' fill='%23F3F2E9'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .cover-ornament {
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+    margin: 0 auto 40px;
+    animation: fadeSlideUp 1.2s ease both;
+    animation-delay: 0.2s;
+  }
+  .cover-ornament-bottom {
+    margin: 40px auto 0;
+    animation-delay: 0.8s;
+  }
+  .cover-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 24px;
+    animation: fadeSlideUp 1s ease both; animation-delay: 0.3s;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 16px;
+    animation: fadeSlideUp 1s ease both; animation-delay: 0.4s;
+  }
+  .cover-title em { color: var(--bronze); font-style: italic; }
+  .cover-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300; font-style: italic;
+    color: rgba(243,242,233,0.65);
+    margin-bottom: 12px;
+    animation: fadeSlideUp 1s ease both; animation-delay: 0.5s;
+  }
+  .cover-tagline {
+    font-family: 'Lato', sans-serif; font-weight: 300;
+    font-size: 0.88rem; letter-spacing: 0.08em;
+    color: rgba(155,170,135,0.8); margin-bottom: 0;
+    animation: fadeSlideUp 1s ease both; animation-delay: 0.6s;
+  }
+  .cover-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: rgba(178,158,120,0.9);
+    margin-top: 8px;
+    animation: fadeSlideUp 1s ease both; animation-delay: 0.7s;
+  }
+  .cover-btn {
+    display: inline-block; margin-top: 56px;
+    padding: 16px 48px;
+    border: 1px solid rgba(155,170,135,0.5);
+    color: var(--sage-light);
+    font-family: 'Lato', sans-serif; font-size: 0.78rem;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer; background: transparent;
+    transition: all var(--transition);
+    animation: fadeSlideUp 1s ease both; animation-delay: 0.9s;
+  }
+  .cover-btn:hover {
+    background: var(--sage); border-color: var(--sage);
+    color: var(--charcoal); transform: translateY(-2px);
+  }
+
+  /* LAYOUT */
+  #app { display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  #sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--cream-dark);
+    border-right: 1px solid rgba(155,170,135,0.2);
+    overflow-y: auto; z-index: 100;
+    display: flex; flex-direction: column;
+    transform: translateX(0);
+    transition: transform var(--transition), background var(--transition);
+    padding-top: 80px;
+  }
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
+  .sidebar-logo {
+    padding: 0 28px 32px;
+    border-bottom: 1px solid rgba(155,170,135,0.15);
+    margin-bottom: 20px;
+  }
+  .sidebar-logo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--charcoal); line-height: 1.3;
+  }
+  .sidebar-logo-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem; font-style: italic;
+    color: var(--charcoal-light); margin-top: 4px;
+  }
+  .sidebar-nav { padding: 0 0 40px; }
+  .sidebar-nav a {
+    display: flex; align-items: flex-start;
+    padding: 10px 28px;
+    font-size: 0.78rem; letter-spacing: 0.02em;
+    color: var(--charcoal-light); text-decoration: none;
+    transition: all 0.2s; line-height: 1.4;
+    border-left: 2px solid transparent;
+    gap: 10px;
+  }
+  .sidebar-nav a .nav-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.65rem; color: var(--sage);
+    min-width: 18px; margin-top: 1px;
+  }
+  .sidebar-nav a:hover { color: var(--charcoal); background: rgba(155,170,135,0.08); }
+  .sidebar-nav a.active {
+    color: var(--charcoal); border-left-color: var(--sage);
+    background: rgba(155,170,135,0.1); font-weight: 400;
+  }
+
+  /* MAIN */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1; max-width: 820px;
+    padding: 80px 64px 120px;
+    min-height: 100vh;
+  }
+
+  /* TOP BAR */
+  #topbar {
+    position: fixed; top: 3px; right: 0;
+    left: var(--sidebar-w);
+    height: 56px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 40px; gap: 12px; z-index: 90;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(155,170,135,0.15);
+    transition: background var(--transition);
+  }
+  .topbar-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(155,170,135,0.3);
+    background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--charcoal-light); font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .topbar-btn:hover { border-color: var(--sage); color: var(--charcoal); background: rgba(155,170,135,0.1); }
+  #menu-btn { display: none; }
+
+  /* CHAPTER SECTIONS */
+  .chapter {
+    margin-bottom: 80px;
+    animation: fadeSlideUp 0.6s ease both;
+  }
+  .chapter-header {
+    display: flex; align-items: flex-start; gap: 20px;
+    margin-bottom: 36px; cursor: pointer; user-select: none;
+  }
+  .chapter-badge {
+    min-width: 52px; height: 52px; border-radius: 50%;
+    background: var(--sage); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 600;
+    flex-shrink: 0; margin-top: 4px;
+    transition: background var(--transition);
+  }
+  .chapter-badge.intro-badge, .chapter-badge.final-badge {
+    background: var(--bronze); font-size: 1.2rem;
+  }
+  .chapter-title-wrap { flex: 1; }
+  .chapter-label {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: 4px; font-weight: 400;
+  }
+  h2.chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600; line-height: 1.2;
+    color: var(--charcoal);
+  }
+  .chapter-toggle {
+    margin-left: auto; width: 32px; height: 32px;
+    border: 1px solid rgba(155,170,135,0.3); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--sage); font-size: 0.9rem;
+    transition: all 0.2s; flex-shrink: 0; margin-top: 10px;
+    cursor: pointer;
+  }
+  .chapter.open .chapter-toggle { transform: rotate(180deg); border-color: var(--sage); }
+  .chapter-preview {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: var(--charcoal-light); line-height: 1.6;
+    padding-left: 72px; margin-bottom: 0;
+    display: block;
+  }
+  .chapter-body {
+    padding-left: 72px;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .chapter.open .chapter-body { max-height: 99999px; opacity: 1; }
+  .chapter.open .chapter-preview { display: none; }
+  .chapter-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, var(--sage), transparent);
+    margin: 40px 0 40px 72px;
+  }
+
+  /* TYPOGRAPHY */
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--charcoal); margin: 36px 0 14px;
+  }
+  h3::before {
+    content: '§ '; color: var(--sage); font-size: 0.9em;
+  }
+  p { margin-bottom: 18px; color: var(--charcoal-mid); font-size: 0.97rem; line-height: 1.85; }
+  ul { margin: 12px 0 20px 0; padding-left: 0; list-style: none; }
+  ul li {
+    position: relative; padding-left: 20px; margin-bottom: 8px;
+    font-size: 0.95rem; color: var(--charcoal-mid); line-height: 1.7;
+  }
+  ul li::before { content: '—'; position: absolute; left: 0; color: var(--sage); }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-left: 3px solid var(--sage);
+    background: rgba(155,170,135,0.08);
+    padding: 20px 24px; border-radius: 0 8px 8px 0;
+    margin: 24px 0;
+  }
+  .callout.warning { border-left-color: var(--bronze); background: rgba(178,158,120,0.08); }
+  .callout.gold { border-left-color: var(--bronze); background: linear-gradient(135deg, rgba(178,158,120,0.12), rgba(178,158,120,0.05)); }
+  .callout-label {
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .callout.warning .callout-label { color: var(--bronze); }
+  .callout.gold .callout-label { color: var(--bronze); }
+  .callout .callout-label { color: var(--sage-dark); }
+  .callout p { margin-bottom: 0; font-size: 0.92rem; }
+
+  /* LEGAL ARTICLE */
+  .legal-article {
+    border-left: 2px solid var(--sage-light);
+    padding: 16px 24px;
+    margin: 20px 0;
+    background: rgba(155,170,135,0.05);
+    border-radius: 0 4px 4px 0;
+  }
+  .legal-article-label {
+    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sage); font-weight: 700; margin-bottom: 10px;
+  }
+  .legal-article p, .legal-article li {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 0.95rem;
+    color: var(--charcoal-light);
+  }
+
+  /* JURISPRUDENCE */
+  .jurisprudencia {
+    background: var(--cream-dark);
+    border: 1px solid rgba(155,170,135,0.2);
+    border-radius: 8px; padding: 20px 24px; margin: 24px 0;
+  }
+  .jurisprudencia-label {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bronze); margin-bottom: 10px; font-weight: 700;
+  }
+  .jurisprudencia blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1rem;
+    color: var(--charcoal-mid); line-height: 1.7;
+    border: none; padding: 0; margin: 0;
+  }
+
+  /* EXAMPLE BOX */
+  .example-box {
+    background: var(--cream);
+    border: 1px solid var(--bronze-light);
+    border-radius: 8px; padding: 24px 28px; margin: 24px 0;
+  }
+  [data-theme="dark"] .example-box { background: rgba(178,158,120,0.08); }
+  .example-label {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bronze); font-weight: 700; margin-bottom: 12px;
+  }
+  .example-box p { margin-bottom: 0; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 24px 0; border-radius: 8px; }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 0.88rem;
+  }
+  th {
+    background: var(--sage); color: var(--white);
+    font-family: 'Lato', sans-serif; font-weight: 700;
+    font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 14px 16px; text-align: left;
+  }
+  td {
+    padding: 13px 16px; border-bottom: 1px solid rgba(155,170,135,0.15);
+    color: var(--charcoal-mid); vertical-align: top; line-height: 1.5;
+    font-size: 0.88rem;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(155,170,135,0.05); }
+  tr:hover td { background: rgba(155,170,135,0.1); }
+  td:first-child { font-weight: 400; color: var(--charcoal); }
+
+  /* SUMARIO / INTRO SECTION */
+  .intro-section { margin-bottom: 80px; }
+  .section-rule {
+    display: flex; align-items: center; gap: 20px; margin-bottom: 40px;
+  }
+  .section-rule-line { flex: 1; height: 1px; background: rgba(155,170,135,0.3); }
+  .section-rule-text {
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--sage); white-space: nowrap; font-weight: 400;
+  }
+
+  /* CHAPTER 6 — INTERACTIVE COMPARISON */
+  .compare-table-wrap { margin: 24px 0; }
+  .compare-filters {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .compare-filter-btn {
+    padding: 8px 18px; border: 1px solid rgba(155,170,135,0.4);
+    background: transparent; border-radius: 20px; cursor: pointer;
+    font-size: 0.78rem; color: var(--charcoal-light);
+    transition: all 0.2s; font-family: 'Lato', sans-serif;
+  }
+  .compare-filter-btn:hover { border-color: var(--sage); color: var(--charcoal); }
+  .compare-filter-btn.active { background: var(--sage); border-color: var(--sage); color: var(--white); }
+  .compare-grid {
+    display: grid; gap: 12px;
+  }
+  .compare-row {
+    background: var(--cream-dark); border-radius: 8px;
+    border: 1px solid rgba(155,170,135,0.15);
+    overflow: hidden; transition: all 0.2s;
+  }
+  .compare-row:hover { border-color: rgba(155,170,135,0.4); transform: translateY(-1px); }
+  .compare-criterion {
+    padding: 14px 18px;
+    background: rgba(155,170,135,0.1);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; font-weight: 500;
+    color: var(--charcoal); border-bottom: 1px solid rgba(155,170,135,0.1);
+  }
+  .compare-values {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(155,170,135,0.1);
+  }
+  .compare-value {
+    padding: 12px 14px; background: var(--cream-dark);
+    font-size: 0.82rem; color: var(--charcoal-mid); line-height: 1.45;
+    transition: all 0.2s;
+  }
+  .compare-value.highlighted { background: rgba(155,170,135,0.12); color: var(--charcoal); }
+  .compare-value-label {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: 4px; font-weight: 700;
+  }
+  .compare-value.hidden-col { display: none; }
+  .compare-note {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 0.9rem; color: var(--charcoal-light);
+    margin-top: 16px; text-align: center;
+  }
+
+  /* CHAPTER 10 — FLIP CARDS */
+  .cases-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px; margin: 24px 0;
+  }
+  .case-card {
+    height: 260px; perspective: 1000px; cursor: pointer;
+  }
+  .case-card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .case-card.flipped .case-card-inner { transform: rotateY(180deg); }
+  .case-front, .case-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; border-radius: 10px;
+    padding: 28px; display: flex; flex-direction: column;
+  }
+  .case-front {
+    background: var(--sage); color: var(--white);
+  }
+  .case-back {
+    background: var(--cream-dark);
+    border: 1px solid rgba(155,170,135,0.3);
+    transform: rotateY(180deg); color: var(--charcoal);
+  }
+  .case-num {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    font-weight: 700; opacity: 0.25; line-height: 1; margin-bottom: 8px;
+  }
+  .case-title {
+    font-family: 'Playfair Display', serif; font-size: 1rem;
+    font-weight: 600; margin-bottom: 12px; line-height: 1.3;
+  }
+  .case-situation {
+    font-size: 0.85rem; line-height: 1.6; opacity: 0.9; flex: 1;
+  }
+  .case-flip-hint {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0.6; margin-top: 12px; align-self: flex-end;
+  }
+  .case-back-label {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage); font-weight: 700; margin-bottom: 10px;
+  }
+  .case-analysis { font-size: 0.85rem; line-height: 1.65; color: var(--charcoal-mid); flex: 1; }
+  .case-back-hint {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--charcoal-light); margin-top: 12px; align-self: flex-end;
+  }
+
+  /* CHAPTER 11 — CHECKLIST */
+  .checklist-counter {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 28px;
+  }
+  .checklist-progress {
+    flex: 1; height: 6px; background: rgba(155,170,135,0.2);
+    border-radius: 3px; overflow: hidden;
+  }
+  .checklist-progress-bar {
+    height: 100%; background: linear-gradient(90deg, var(--sage), var(--bronze));
+    border-radius: 3px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  .checklist-count {
+    font-family: 'Playfair Display', serif; font-size: 0.9rem;
+    color: var(--sage); white-space: nowrap;
+  }
+  .checklist-section { margin-bottom: 32px; }
+  .checklist-section-title {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+    color: var(--charcoal); margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(155,170,135,0.2);
+  }
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 0; border-bottom: 1px solid rgba(155,170,135,0.08);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .checklist-item:hover { padding-left: 4px; }
+  .checklist-item input[type="checkbox"] { display: none; }
+  .check-box {
+    width: 22px; height: 22px; border: 1.5px solid rgba(155,170,135,0.4);
+    border-radius: 4px; flex-shrink: 0; display: flex;
+    align-items: center; justify-content: center;
+    transition: all 0.25s; margin-top: 2px; background: transparent;
+  }
+  .check-box::after {
+    content: '✓'; font-size: 0.75rem; color: transparent;
+    transition: all 0.2s; font-weight: 700;
+  }
+  .checklist-item.checked .check-box {
+    background: var(--sage); border-color: var(--sage);
+  }
+  .checklist-item.checked .check-box::after { color: white; }
+  .checklist-item.checked .check-label { text-decoration: line-through; color: var(--charcoal-light); }
+  .check-label { font-size: 0.92rem; color: var(--charcoal-mid); line-height: 1.5; }
+
+  /* CONSIDERATIONS / AUTHOR */
+  .final-section { text-align: center; padding: 60px 0; }
+  .final-ornament {
+    display: flex; align-items: center; gap: 20px; justify-content: center;
+    margin-bottom: 48px;
+  }
+  .final-ornament-line { width: 80px; height: 1px; background: var(--sage-light); }
+  .final-ornament-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bronze); }
+  .final-pull {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-style: italic; color: var(--charcoal);
+    line-height: 1.5; max-width: 600px; margin: 0 auto 48px;
+  }
+  .author-card {
+    display: inline-flex; align-items: center; gap: 24px;
+    padding: 28px 36px;
+    border: 1px solid rgba(155,170,135,0.25);
+    border-radius: 12px;
+    background: var(--cream-dark);
+    text-align: left;
+  }
+  .author-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--sage); display: flex; align-items: center;
+    justify-content: center; font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: white; flex-shrink: 0;
+  }
+  .author-name {
+    font-family: 'Playfair Display', serif; font-size: 1.05rem;
+    font-weight: 600; color: var(--charcoal);
+  }
+  .author-title {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 0.9rem; color: var(--charcoal-light);
+  }
+
+  /* BACK TO TOP */
+  #back-to-top {
+    position: fixed; bottom: 32px; right: 32px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--sage); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1rem; z-index: 200;
+    opacity: 0; transform: translateY(10px);
+    transition: all var(--transition);
+    box-shadow: 0 4px 20px rgba(155,170,135,0.4);
+  }
+  #back-to-top.visible { opacity: 1; transform: translateY(0); }
+  #back-to-top:hover { background: var(--sage-dark); transform: translateY(-2px); }
+
+  /* ANIMATIONS */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SUMULA BOX */
+  .sumula-box {
+    background: var(--charcoal);
+    color: var(--cream); border-radius: 8px;
+    padding: 20px 24px; margin: 20px 0;
+  }
+  [data-theme="dark"] .sumula-box { background: rgba(155,170,135,0.15); border: 1px solid rgba(155,170,135,0.2); }
+  .sumula-label {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 8px; font-weight: 700;
+  }
+  .sumula-box blockquote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1rem; line-height: 1.65;
+    color: rgba(243,242,233,0.9); margin: 0; border: none; padding: 0;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    #sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; padding: 70px 28px 80px; max-width: 100%; }
+    #topbar { left: 0; }
+    #menu-btn { display: flex; }
+    .chapter-body { padding-left: 0; }
+    .chapter-preview { padding-left: 0; }
+    .chapter-divider { margin-left: 0; }
+    .compare-values { grid-template-columns: repeat(2, 1fr); }
+    .cases-grid { grid-template-columns: 1fr; }
+    h3::before { content: ''; }
+    h3 { font-size: 1rem; }
+  }
+  @media (max-width: 600px) {
+    #cover { padding: 60px 24px; }
+    .cover-title { font-size: 2rem; }
+    .author-card { flex-direction: column; text-align: center; }
+    .compare-values { grid-template-columns: 1fr; }
+  }
+
+  /* ===== QUIZ ===== */
+  .quiz-wrap {
+    margin: 40px 0;
+    background: var(--cream-dark);
+    border: 1px solid rgba(178,158,120,0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .quiz-header {
+    background: var(--charcoal);
+    padding: 28px 32px 24px;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .quiz-header-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .quiz-header-text {}
+  .quiz-header-label {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 6px;
+  }
+  .quiz-header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: #F3F2E9;
+    line-height: 1.2;
+  }
+  .quiz-header-sub {
+    font-size: 0.82rem; color: var(--charcoal-light); margin-top: 6px;
+  }
+  .quiz-progress-bar-wrap {
+    height: 3px; background: rgba(255,255,255,0.08);
+  }
+  .quiz-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage), var(--bronze));
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  .quiz-body { padding: 32px; }
+  .quiz-step { display: none; }
+  .quiz-step.active { display: block; }
+  .quiz-step-num {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--bronze); margin-bottom: 10px;
+  }
+  .quiz-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 600;
+    line-height: 1.4; margin-bottom: 24px;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 18px;
+    background: var(--white);
+    border: 1px solid rgba(178,158,120,0.15);
+    border-radius: 2px; cursor: pointer;
+    transition: border-color 0.25s, background 0.25s;
+    font-size: 0.9rem; line-height: 1.5;
+    text-align: left; width: 100%;
+  }
+  .quiz-option:hover { border-color: var(--bronze-light); background: var(--cream); }
+  .quiz-option.selected {
+    border-color: var(--sage);
+    background: rgba(155,170,135,0.12);
+  }
+  .quiz-option-dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid rgba(178,158,120,0.4);
+    flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .quiz-option.selected .quiz-option-dot {
+    border-color: var(--sage);
+    background: var(--sage);
+  }
+  .quiz-option.selected .quiz-option-dot::after {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: white;
+  }
+  .quiz-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 28px;
+  }
+  .quiz-btn {
+    padding: 10px 24px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 2px; border: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .quiz-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .quiz-btn-next {
+    background: linear-gradient(135deg, var(--sage-dark), var(--sage));
+    color: #F3F2E9;
+  }
+  .quiz-btn-back {
+    background: none; color: var(--charcoal-light);
+    border: 1px solid rgba(178,158,120,0.25);
+  }
+  .quiz-counter { font-size: 0.8rem; color: var(--charcoal-light); }
+
+  /* QUIZ RESULT */
+  .quiz-result { display: none; padding: 32px; }
+  .quiz-result.active { display: block; }
+  .quiz-result-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px;
+    background: rgba(155,170,135,0.15);
+    border: 1px solid rgba(155,170,135,0.35);
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-dark); margin-bottom: 16px; border-radius: 2px;
+  }
+  .quiz-result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    line-height: 1.15; margin-bottom: 8px;
+  }
+  .quiz-result-title em { font-style: italic; color: var(--bronze); }
+  .quiz-result-sub {
+    font-size: 0.88rem; color: var(--charcoal-light);
+    margin-bottom: 24px;
+  }
+  .quiz-result-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; line-height: 1.75;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    background: var(--white);
+    border-left: 3px solid var(--bronze);
+  }
+  .quiz-result-pros { margin-bottom: 20px; }
+  .quiz-result-pros-title {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-dark); margin-bottom: 10px;
+  }
+  .quiz-result-pros ul {
+    list-style: none; display: flex; flex-direction: column; gap: 8px;
+  }
+  .quiz-result-pros ul li {
+    font-size: 0.88rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .quiz-result-pros ul li::before {
+    content: '✦'; color: var(--sage); font-size: 0.6rem; margin-top: 4px; flex-shrink: 0;
+  }
+  .quiz-result-cta {
+    font-size: 0.8rem; color: var(--charcoal-light);
+    padding: 14px 18px;
+    background: rgba(178,158,120,0.1);
+    border: 1px solid rgba(178,158,120,0.2);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .quiz-result-cta strong { color: var(--charcoal); }
+  .quiz-restart-btn {
+    background: none; border: 1px solid rgba(178,158,120,0.3);
+    padding: 10px 20px; cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--charcoal-light);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .quiz-restart-btn:hover { border-color: var(--bronze); color: var(--bronze); }
+  /* ===== END QUIZ ===== */
+
+  /* ===== TOOLTIPS / GLOSSÁRIO ===== */
+  .termo {
+    border-bottom: 1px dashed var(--bronze);
+    cursor: help;
+    position: relative;
+    display: inline;
+    color: inherit;
+  }
+  .termo::after {
+    content: attr(data-def);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: var(--charcoal);
+    color: #F3F2E9;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    line-height: 1.5;
+    padding: 10px 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(178,158,120,0.3);
+    width: 240px;
+    text-align: left;
+    white-space: normal;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 9000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .termo::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(178,158,120,0.3);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 9000;
+  }
+  .termo:hover::after,
+  .termo:hover::before,
+  .termo:focus::after,
+  .termo:focus::before {
+    opacity: 1;
+    visibility: visible;
+  }
+  /* mobile: tap to show tooltip */
+  .termo.active::after,
+  .termo.active::before {
+    opacity: 1;
+    visibility: visible;
+  }
+  /* ===== END TOOLTIPS ===== */
+
+  /* ===== PASSWORD LOCK SCREEN ===== */
+  #lock-screen {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--charcoal);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #lock-screen.unlocked {
+    opacity: 0; visibility: hidden; pointer-events: none;
+  }
+  .lock-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='80' cy='0' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='0' cy='80' r='1.5' fill='%23F3F2E9'/%3E%3Ccircle cx='80' cy='80' r='1.5' fill='%23F3F2E9'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .lock-glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(155,170,135,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(178,158,120,0.10) 0%, transparent 60%);
+  }
+  .lock-box {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0;
+    width: 100%; max-width: 420px;
+  }
+  .lock-ornament {
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+    margin-bottom: 32px;
+  }
+  .lock-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 20px;
+  }
+  .lock-icon {
+    font-size: 2rem; margin-bottom: 20px;
+    opacity: 0.7;
+    color: var(--bronze-light);
+  }
+  .lock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700; color: #F3F2E9;
+    text-align: center; line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .lock-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--sage-light), var(--bronze-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .lock-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; color: var(--charcoal-light);
+    text-align: center; margin-bottom: 36px;
+    color: #9a9880;
+  }
+  .lock-divider {
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(178,158,120,0.4), transparent);
+    margin-bottom: 36px;
+  }
+  .lock-form-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #9a9880; margin-bottom: 12px;
+    align-self: flex-start;
+  }
+  .lock-input-wrap {
+    width: 100%; position: relative; margin-bottom: 12px;
+  }
+  .lock-input {
+    width: 100%; padding: 14px 50px 14px 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(178,158,120,0.25);
+    border-radius: 4px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem; letter-spacing: 0.1em;
+    color: #F3F2E9;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    -webkit-text-security: disc;
+  }
+  .lock-input:focus {
+    border-color: rgba(178,158,120,0.7);
+    background: rgba(255,255,255,0.09);
+  }
+  .lock-input.error {
+    border-color: rgba(200, 100, 80, 0.7);
+    animation: shake 0.4s ease;
+  }
+  .lock-eye-btn {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: #9a9880; font-size: 1rem; padding: 4px;
+    transition: color 0.2s;
+  }
+  .lock-eye-btn:hover { color: var(--bronze-light); }
+  .lock-error-msg {
+    font-size: 0.78rem; color: rgba(220,100,80,0.9);
+    margin-bottom: 12px; align-self: flex-start;
+    min-height: 18px;
+    font-family: 'Lato', sans-serif;
+  }
+  .lock-btn {
+    width: 100%; padding: 14px 24px;
+    background: linear-gradient(135deg, var(--sage-dark), var(--sage));
+    border: none; border-radius: 4px; cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #F3F2E9; margin-bottom: 32px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .lock-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .lock-btn:active { transform: translateY(0); }
+  .lock-footer {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem; color: #6b6b6b;
+    text-align: center; letter-spacing: 0.05em;
+  }
+  .lock-footer a {
+    color: var(--bronze-light); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .lock-footer a:hover { color: var(--sage-light); }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+  @keyframes unlockFade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  /* hide main content until unlocked */
+  body.locked #progress-bar,
+  body.locked #cover,
+  body.locked #app { visibility: hidden; }
+  body.unlocked #progress-bar,
+  body.unlocked #cover,
+  body.unlocked #app { visibility: visible; }
+</style>
+</head>
+<body class="locked">
+
+<!-- ===== LOCK SCREEN ===== -->
+<div id="lock-screen">
+  <div class="lock-pattern"></div>
+  <div class="lock-glow"></div>
+  <div class="lock-box">
+    <div class="lock-ornament"></div>
+    <div class="lock-label">E-book · Acesso Exclusivo</div>
+    <div class="lock-icon">🔒</div>
+    <h1 class="lock-title">Regimes de Bens<br><em>no Casamento</em></h1>
+    <p class="lock-subtitle">Thamirys Silvera Martin · Advogada</p>
+    <div class="lock-divider"></div>
+    <div class="lock-form-label">Código de acesso</div>
+    <div class="lock-input-wrap">
+      <input
+        type="password"
+        id="lock-input"
+        class="lock-input"
+        placeholder="Digite seu código"
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter')tryUnlock()"
+      />
+      <button class="lock-eye-btn" onclick="toggleLockEye(this)" title="Mostrar/ocultar">👁</button>
+    </div>
+    <div class="lock-error-msg" id="lock-error"></div>
+    <button class="lock-btn" onclick="tryUnlock()">Acessar E-book</button>
+    <div class="lock-footer">
+      Ainda não tem acesso? <a href="https://seusite.com.br/ebook" target="_blank">Adquira aqui →</a><br><br>
+      © 2025 Thamirys Silvera Martin · Todos os direitos reservados
+    </div>
+  </div>
+</div>
+<!-- ===== END LOCK SCREEN ===== -->
+
+<div id="progress-bar"></div>
+
+<!-- COVER -->
+<section id="cover">
+  <div class="cover-pattern"></div>
+  <div class="cover-label">E-book · Direito de Família</div>
+  <div class="cover-ornament"></div>
+  <h1 class="cover-title">Regimes de Bens<br><em>no Casamento</em></h1>
+  <p class="cover-subtitle">O Guia Completo para Noivos e Advogados</p>
+  <p class="cover-tagline">Tudo o que você precisa saber antes de dizer SIM</p>
+  <p class="cover-author">Thamirys Silvera Martin · Advogada</p>
+  <div class="cover-ornament cover-ornament-bottom"></div>
+  <button class="cover-btn" onclick="document.getElementById('main').scrollIntoView({behavior:'smooth'})">Começar Leitura</button>
+</section>
+
+<!-- APP LAYOUT -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-title">Regimes de Bens<br>no Casamento</div>
+      <div class="sidebar-logo-author">Thamirys Silvera Martin</div>
+    </div>
+    <div class="sidebar-nav">
+      <a href="#intro" data-section="intro"><span class="nav-num">—</span>Introdução</a>
+      <a href="#cap1" data-section="cap1"><span class="nav-num">01</span>O Que é Regime de Bens?</a>
+      <a href="#cap2" data-section="cap2"><span class="nav-num">02</span>Comunhão Parcial de Bens</a>
+      <a href="#cap3" data-section="cap3"><span class="nav-num">03</span>Comunhão Universal de Bens</a>
+      <a href="#cap4" data-section="cap4"><span class="nav-num">04</span>Separação de Bens</a>
+      <a href="#cap5" data-section="cap5"><span class="nav-num">05</span>Participação Final nos Aquestos</a>
+      <a href="#cap6" data-section="cap6"><span class="nav-num">06</span>Quadro Comparativo</a>
+      <a href="#cap7" data-section="cap7"><span class="nav-num">07</span>Como Escolher o Regime Ideal</a>
+      <a href="#cap8" data-section="cap8"><span class="nav-num">08</span><span class="termo" data-def="Contrato firmado antes do casamento, em cartório, para escolher um regime de bens diferente da Comunhão Parcial." tabindex="0">Pacto Antenupcial</span></a>
+      <a href="#cap9" data-section="cap9"><span class="nav-num">09</span>Alteração do Regime</a>
+      <a href="#cap10" data-section="cap10"><span class="nav-num">10</span>Casos Reais</a>
+      <a href="#cap11" data-section="cap11"><span class="nav-num">11</span>Checklist Pré-Casamento</a>
+      <a href="#final" data-section="final"><span class="nav-num">—</span>Considerações Finais</a>
+    </div>
+  </nav>
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <button class="topbar-btn" id="menu-btn" onclick="toggleSidebar()" title="Menu" aria-label="Abrir menu">☰</button>
+    <button class="topbar-btn" id="theme-btn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema claro/escuro">◐</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+
+    <!-- INTRO -->
+    <section id="intro" class="chapter open" style="margin-top: 60px;">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge intro-badge">✦</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Abertura</div>
+          <h2 class="chapter-title">Introdução</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <div class="chapter-body">
+        <p>Se o casamento não é o evento mais importante da vida de uma pessoa, certamente é um dos momentos mais relevantes. Envolve amor, confiança e o objetivo de construir uma vida juntos. Porém, a realidade é que o casamento não se resume ao dia marcado para a celebração ou a festa planejada. Casamento é compromisso sério, constrói-se ao longo dos anos, com cumplicidade e parceria, só que na emoção muitas pessoas se frustram no casamento, justamente por ignorarem outros detalhes tão importantes quanto a festa ou a celebração do casamento.</p>
+        <p>Como vocês vão administrar a construção de patrimônio? Como vocês vão lidar com as finanças? Vocês sabiam que regime de bens pode impactar em tudo isso?</p>
+        <div class="callout">
+          <div class="callout-label">Motivação Central</div>
+          <p>Perceber que as pessoas se casam e muitas nem sabem o seu regime de bens e pior, desconhecem os impactos dele em sua vida conjugal.</p>
+        </div>
+        <p>Por isso, ao criar esse e-book a finalidade é estritamente educacional, visando conhecimento aos leitores sobre os tipos de regime de bens. Esse arquivo foi planejado para noivos e casais que querem entender melhor os tipos de regimes de bens, bem como os direitos e obrigações relacionados a estes. Além disso, o e-book é uma referência prática para estudantes e advogados que desejam estudar o tema.</p>
+        <p>Ao longo deste e-book, você encontrará explicações claras, exemplos práticos, quadros comparativos e um checklist completo para orientar a escolha do regime de bens mais adequado para cada situação. O objetivo é desmistificar o Direito de Família e tornar esse conhecimento acessível a todos.</p>
+        <div class="callout warning">
+          <div class="callout-label">Por que isso importa?</div>
+          <p>A escolha do regime de bens define quem é dono de quê durante o casamento e, principalmente, o que acontece com o patrimônio do casal em caso de divórcio, separação ou morte de um dos <span class="termo" data-def="As pessoas unidas pelo casamento." tabindex="0">cônjuges</span>. Uma escolha equivocada pode gerar conflitos, perdas financeiras e longas disputas judiciais.</p>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 1 -->
+    <section id="cap1" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">01</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 1</div>
+          <h2 class="chapter-title">O Que é Regime de Bens?</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">O regime de bens são normas previstas no ordenamento jurídico brasileiro que apresentam as regras a respeito do patrimônio no casamento, seja durante ou após a união...</p>
+      <div class="chapter-body">
+        <p>O regime de bens são normas previstas no ordenamento jurídico brasileiro que apresentam as regras a respeito do patrimônio no casamento, seja durante ou após a união. Em outras palavras, ele responde perguntas como:</p>
+        <ul>
+          <li>Quem é dono dos bens adquiridos antes do casamento?</li>
+          <li>Os bens comprados depois do casamento pertencem a ambos ou a quem os comprou?</li>
+          <li>Uma dívida feita por um <span class="termo" data-def="Cada uma das pessoas unidas pelo casamento." tabindex="0">cônjuge</span> compromete o patrimônio do outro?</li>
+          <li>Em caso de divórcio ou falecimento, como o patrimônio será dividido?</li>
+        </ul>
+        <h3>Base Legal</h3>
+        <p>No Brasil, especificamente nos artigos 1.639 a 1.688 do Código Civil encontramos a previsão dos regimes de bens. A legislação prevê quatro regimes possíveis:</p>
+        <ul>
+          <li>Comunhão Parcial de Bens — regime legal, aplicado automaticamente quando as partes não escolhem nenhum outro</li>
+          <li>Comunhão Universal de Bens</li>
+          <li>Separação de Bens — convencional ou obrigatória, determinada por lei</li>
+          <li>Participação Final nos Aquestos</li>
+        </ul>
+        <h3>Quando o Regime é Definido?</h3>
+        <p>O regime de bens é escolhido antes do casamento. Quando os interessados se dirigem ao cartório para dar entrada no casamento, já são questionados a respeito do regime de bens. Se os noivos não definirem um regime, a própria legislação já prevê a Comunhão Parcial de Bens. Caso tenham a intenção de escolher um regime diverso, é necessário fazerem um Pacto Antenupcial no cartório.</p>
+        <div class="callout warning">
+          <div class="callout-label">Atenção!</div>
+          <p>Uma dúvida muito comum: <em>"Se eu escolher esse regime de bens nunca mais vou poder alterar?"</em> A resposta é que sim, é possível alterar o regime de bens após o casamento, porém é necessária a autorização judicial e o comum acordo entre os cônjuges, além do cumprimento de alguns requisitos legais. Veremos isso com detalhes no Capítulo 9.</p>
+        </div>
+        <h3>Quem Não Pode Escolher Livremente o Regime?</h3>
+        <p>Existem casos em que as pessoas não podem escolher o regime de bens e então, necessariamente a lei estabelece o regime de separação obrigatória, conforme disciplina o Artigo 1.641 do Código Civil.</p>
+        <div class="legal-article">
+          <div class="legal-article-label">Art. 1.523 do Código Civil — Causas Suspensivas</div>
+          <p>Não devem casar:</p>
+          <ul>
+            <li>I — o viúvo ou a viúva que tiver filho do cônjuge falecido, enquanto não fizer inventário dos bens do casal e der <span class="termo" data-def="Divisão formal do patrimônio do casal em caso de divórcio, separação ou falecimento." tabindex="0">partilha</span> aos herdeiros;</li>
+            <li>II — a viúva, ou a mulher cujo casamento se desfez por ser nulo ou ter sido anulado, até dez meses depois do começo da viuvez, ou da <span class="termo" data-def="Encerramento formal do vínculo conjugal, seja por divórcio, separação ou morte." tabindex="0">dissolução</span> da sociedade conjugal;</li>
+            <li>III — o divorciado, enquanto não houver sido homologada ou decidida a partilha dos bens do casal;</li>
+            <li>IV — o tutor ou o curador e os seus descendentes, ascendentes, irmãos, cunhados ou sobrinhos, com a pessoa tutelada ou curatelada, enquanto não cessar a tutela ou curatela, e não estiverem saldadas as respectivas contas.</li>
+          </ul>
+          <p>Parágrafo único. É permitido aos <span class="termo" data-def="As pessoas prestes a se casar; os noivos no momento da habilitação." tabindex="0">nubentes</span> solicitar ao juiz que não lhes sejam aplicadas as causas suspensivas previstas nos incisos I, III e IV deste artigo, provando-se a inexistência de prejuízo, respectivamente, para o herdeiro, para o ex-cônjuge e para a pessoa tutelada ou curatelada; no caso do inciso II, a nubente deverá provar nascimento de filho, ou inexistência de gravidez, na fluência do prazo.</p>
+        </div>
+        <p>Também não podem escolher livremente o regime de bens:</p>
+        <ul>
+          <li>Maiores de 70 anos</li>
+          <li>Aqueles que dependerem de autorização judicial para casar-se</li>
+        </ul>
+        <p>Nessas situações, o casal não pode escolher um regime de bens diferente. A separação obrigatória é necessariamente aplicada.</p>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 2 -->
+    <section id="cap2" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">02</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 2</div>
+          <h2 class="chapter-title">Comunhão Parcial de Bens</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">A Comunhão Parcial de Bens é a regra geral e padrão para regime de bens no Brasil. Se você não decidir, este será o regime aplicado...</p>
+      <div class="chapter-body">
+        <p>A Comunhão Parcial de Bens é a regra geral e padrão para regime de bens no Brasil — se você não decidir, este será o regime aplicado. Por tal motivo, é importante que você tenha conhecimento a respeito.</p>
+        <h3>O Que Entra na Comunhão?</h3>
+        <p>Neste regime, todos os bens adquiridos durante o casamento por meio de recursos financeiros do casal, independentemente de qual cônjuge os adquiriu ou quem pagou, pertencem aos dois. Exemplos:</p>
+        <ul>
+          <li>Imóvel comprado durante o casamento com recursos do trabalho de ambos ou de apenas um deles</li>
+          <li>Carro adquirido após o matrimônio</li>
+          <li>Investimentos e aplicações feitas durante o casamento</li>
+          <li>Negócios e empresas constituídos após o casamento</li>
+          <li>Salários e rendimentos recebidos durante o casamento</li>
+        </ul>
+        <h3>O Que NÃO Entra na Comunhão?</h3>
+        <p>Na Comunhão Parcial podem existir bens que permanecem sendo patrimônio exclusivo de determinado cônjuge. Exemplos:</p>
+        <ul>
+          <li>Bens que cada cônjuge possuía antes de casar-se</li>
+          <li>Bens recebidos por herança ou doação, mesmo que durante o casamento</li>
+          <li>Bens adquiridos com o dinheiro da venda de bem particular</li>
+          <li>Obrigações anteriores ao casamento</li>
+          <li>Dívidas provenientes de atos ilícitos praticados por apenas um dos cônjuges</li>
+        </ul>
+        <div class="example-box">
+          <div class="example-label">Exemplo Prático</div>
+          <p>João e Maria se casaram em regime de Comunhão Parcial. João tinha um apartamento antes de casar — esse imóvel é exclusivamente dele. Durante o casamento, eles compraram juntos uma casa: essa casa é de ambos (50% cada). Se Maria receber uma herança de seus pais durante o casamento, esse valor também é exclusivamente dela.</p>
+        </div>
+        <h3>Dívidas na Comunhão Parcial</h3>
+        <p>As dívidas contraídas por um cônjuge durante o casamento em benefício da família comunicam-se ao outro. Já as dívidas pessoais, como empréstimos para fins particulares, em regra, não atingem o patrimônio do cônjuge inocente, mas a jurisprudência analisa cada caso concreto.</p>
+        <p>Além disso, o fato da dívida ser anterior ao casamento e exclusivamente de determinado cônjuge não significa que o patrimônio do casal adquirido na constância do casamento não pode ser penhorado — sendo, nestes casos, preservada a <span class="termo" data-def="A metade do patrimônio comum que pertence a cada cônjuge por direito." tabindex="0">meação</span> do outro cônjuge não devedor.</p>
+        <div class="jurisprudencia">
+          <div class="jurisprudencia-label">Jurisprudência · TJPR · 12ª Câmara Cível · 0128401-25.2025.8.16.0000</div>
+          <blockquote>"É possível a <span class="termo" data-def="Bloqueio judicial de um bem para garantir o pagamento de uma dívida." tabindex="0">penhora</span> de bens registrados em nome do cônjuge ou companheiro do devedor, em regime de comunhão parcial de bens, desde que respeitada a meação pertencente ao consorte não devedor, independentemente de a dívida ser anterior à união estável, e a ausência de citação do terceiro não implica nulidade, desde que assegurado o contraditório."</blockquote>
+        </div>
+        <h3>Vantagens e Desvantagens</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Situação</th><th>Vantagem</th><th>Desvantagem</th></tr></thead>
+            <tbody>
+              <tr><td>Bens adquiridos antes do casamento</td><td>Protegido — cada um guarda o que tinha antes</td><td>Exige comprovação documental</td></tr>
+              <tr><td>Bens adquiridos durante o casamento</td><td>Divisão igualitária (50%) do que foi construído juntos</td><td>Não exige contribuição proporcional para ter direito a 50%</td></tr>
+              <tr><td>Partilha em divórcio</td><td>Partilha apenas o que foi adquirido durante o casamento</td><td>Pode ser injusto caso um tenha contribuído mais</td></tr>
+              <tr><td>Falecimento de um dos Cônjuges</td><td>50% dos bens adquiridos durante o casamento pertence ao cônjuge sobrevivente</td><td>Cônjuge pode herdar bens particulares do falecido em igualdade com os demais herdeiros — pode ser indesejado</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 3 -->
+    <section id="cap3" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">03</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 3</div>
+          <h2 class="chapter-title">Comunhão Universal de Bens</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Na Comunhão Universal de Bens todos os bens adquiridos antes e depois do casamento pertencem a ambos os cônjuges. É o regime da integração patrimonial total...</p>
+      <div class="chapter-body">
+        <p>Na Comunhão Universal de Bens todos os bens adquiridos antes e depois do casamento pertencem a ambos os cônjuges. É o regime da integração patrimonial total.</p>
+        <h3>O Que Entra no Patrimônio do Casal?</h3>
+        <ul>
+          <li>Todos os bens que cada cônjuge possuía antes de casar</li>
+          <li>Todos os bens adquiridos durante o casamento, a qualquer título</li>
+          <li>Herança e doações recebidas durante o casamento (salvo cláusula de <span class="termo" data-def="Qualidade de um bem que não se mistura ao patrimônio do casal, permanecendo exclusivo de quem o recebeu." tabindex="0">incomunicabilidade</span>)</li>
+          <li>Dívidas anteriores e posteriores ao casamento (regra geral)</li>
+        </ul>
+        <h3>Exceções — O Que NÃO Entra no Patrimônio do Casal?</h3>
+        <p>O Art. 1.668 do Código Civil estabelece as hipóteses em que não haverá comunicação:</p>
+        <ul>
+          <li>Bens doados ou herdados com cláusula de incomunicabilidade</li>
+          <li>Bens gravados de fideicomisso e o direito do herdeiro fiduciário, antes da realização da condição suspensiva</li>
+          <li>Dívidas anteriores ao casamento, salvo se provierem de despesas com seus aprestos ou reverterem em proveito comum</li>
+          <li>Doações antenupciais feitas por um cônjuge ao outro com cláusula de incomunicabilidade</li>
+          <li>Bens de uso pessoal, livros e instrumentos de profissão</li>
+        </ul>
+        <h3>Quando a Comunhão Universal é uma Boa Escolha?</h3>
+        <p>Este regime é indicado especialmente para casais que:</p>
+        <ul>
+          <li>Possuem patrimônio semelhante e desejam que todos os bens pertençam a ambos</li>
+          <li>Já convivem há muito tempo e confiam plenamente um no outro</li>
+          <li>Desejam simplicidade na eventual partilha futura</li>
+          <li>Têm valores culturais ou familiares que valorizam a total comunhão de vida e bens</li>
+        </ul>
+        <h3>Vantagens e Desvantagens</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Situação</th><th>Vantagem</th><th>Desvantagem</th></tr></thead>
+            <tbody>
+              <tr><td>Bens adquiridos antes e depois</td><td>Integração total; o casal começa do mesmo ponto</td><td>Bens anteriores de valor alto são compartilhados — perde a integralidade, apenas 50%</td></tr>
+              <tr><td>Partilha em divórcio</td><td>Simples: tudo dividido ao meio</td><td>Pode ser injusto se um contribuiu mais que o outro</td></tr>
+              <tr><td>Falecimento</td><td>50% dos bens já pertencem ao cônjuge sobrevivente</td><td>Não participa da herança, apenas tem direito à meação</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 4 -->
+    <section id="cap4" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">04</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 4</div>
+          <h2 class="chapter-title">Separação de Bens</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Na Separação de Bens os bens do casal não se comunicam, pertencendo exclusivamente para cada um, tanto o que possuía antes de casar quanto o que adquirir durante o casamento...</p>
+      <div class="chapter-body">
+        <p>Na Separação de Bens, como o nome já exemplifica, os bens do casal não se comunicam, pertencendo exclusivamente para cada um — tanto o que possuía antes de casar quanto o que adquirir durante o casamento. Não há comunicação de bens entre os cônjuges, salvo se houver a aquisição de um bem com contribuição financeira de ambos os cônjuges, sendo necessária a comprovação.</p>
+        <h3>Separação Convencional ou Total de Bens</h3>
+        <p>A Separação Total de Bens é escolhida por vontade própria do casal, por meio de formalização de Pacto Antenupcial feito em cartório. Nesse caso, cada cônjuge administra e dispõe de seus próprios bens com total autonomia, sem precisar da autorização do outro para realizar negócios.</p>
+        <h3>Separação Obrigatória de Bens</h3>
+        <p>A Separação Obrigatória de Bens é a determinada por lei (art. 1.641, CC) em situações específicas e não depende da vontade do casal — é aplicada automaticamente. As hipóteses já foram descritas no Capítulo 1.</p>
+        <p>Vale destacar que na separação obrigatória aplica-se a Súmula 377 do STF:</p>
+        <div class="sumula-box">
+          <div class="sumula-label">Súmula 377 do STF</div>
+          <blockquote>"No regime de separação legal de bens, comunicam-se os adquiridos na constância do casamento."</blockquote>
+        </div>
+        <p>Isso significa que, mesmo na separação obrigatória, os bens adquiridos durante o casamento a título oneroso e com esforço comum podem ser partilhados.</p>
+        <h3>O Que Acontece com os Bens na Separação?</h3>
+        <p>Cada cônjuge:</p>
+        <ul>
+          <li>É dono exclusivo de tudo que tinha antes e do que adquirir durante o casamento</li>
+          <li>Pode vender, comprar, hipotecar ou dispor de seus bens sem autorização do cônjuge</li>
+          <li>Responde individualmente por suas próprias dívidas</li>
+          <li>Não tem direito à metade dos bens do outro em caso de divórcio</li>
+        </ul>
+        <h3>Quando a Separação de Bens é Indicada?</h3>
+        <ul>
+          <li>Casais com grandes patrimônios ou empresas familiares já consolidadas</li>
+          <li>Situações em que um dos cônjuges tem dívidas ou histórico financeiro negativo</li>
+          <li>Casais que desejam total autonomia financeira um do outro</li>
+        </ul>
+        <h3>Separação de Bens e Herança</h3>
+        <div class="callout warning">
+          <div class="callout-label">Ponto Importante</div>
+          <p>No regime de Separação de Bens, o cônjuge sobrevivente concorre com os descendentes na herança do falecido. Isso significa que, ao contrário do que muitos imaginam, a separação de bens não impede o cônjuge de herdar, mas pode limitar sua quota hereditária.</p>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 5 -->
+    <section id="cap5" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">05</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 5</div>
+          <h2 class="chapter-title">Participação Final nos Aquestos</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Um regime misto: durante a união funciona como Separação Total; ao término, a partilha ocorre como na Comunhão Parcial de Bens...</p>
+      <div class="chapter-body">
+        <p>Para entender o regime da Participação Final nos Aquestos é importante saber que se trata de um regime misto. Digamos que seja um pouco da Comunhão Parcial de Bens e da Separação Total: durante a união o regime é o de separação total e quando o casamento terminar, o regime adotado é como se fosse o da comunhão parcial de bens. Não é tão conhecido ou usado, mas pode ser uma boa escolha a depender do perfil do casal.</p>
+        <h3>Como Funciona Durante o Casamento?</h3>
+        <p>Enquanto o casal permanecer junto, cada cônjuge tem liberdade para administrar seus bens como bem entender, podendo investir, vender — exatamente como na Separação de Bens — sem precisar da autorização do outro quando se tratar de bens imóveis desde que particulares, sendo importante constar isso expressamente no <span class="termo" data-def="Contrato firmado antes do casamento, em cartório, para escolher um regime de bens diferente da Comunhão Parcial." tabindex="0">pacto antenupcial</span>.</p>
+        <div class="legal-article">
+          <div class="legal-article-label">Art. 1.656 do Código Civil</div>
+          <p>"No pacto antenupcial, que adotar o regime de participação final nos <span class="termo" data-def="Bens adquiridos pelo casal durante o casamento, por esforço comum." tabindex="0">aquestos</span>, poder-se-á convencionar a livre disposição dos bens imóveis, desde que particulares."</p>
+        </div>
+        <h3>E no Encerramento do Casamento?</h3>
+        <p>Se o casamento resultar em divórcio, a partilha dos bens será feita como se fosse uma comunhão parcial de bens. Ao final do casamento (por divórcio, separação ou morte), calcula-se o que cada cônjuge adquiriu durante a união — os chamados aquestos. O que cada um acumulou de bens próprios será objeto de partilha, tendo cada um o direito a metade dos bens que o outro acumulou.</p>
+        <div class="example-box">
+          <div class="example-label">Exemplo Prático</div>
+          <p>Durante o casamento, Paulo acumulou R$ 500.000,00 em bens e Ana acumulou R$ 200.000,00. Cada um tem direito à metade dos bens do outro. Paulo tem direito a R$ 100.000,00 e Ana direito a R$ 250.000,00. Então é feita a compensação e Ana terá direito a receber de Paulo metade dessa diferença: R$ 150.000,00. Ou seja, ao final, cada um terá R$ 350.000,00.</p>
+        </div>
+        <h3>O Que São Aquestos?</h3>
+        <p>Aquestos são os bens adquiridos, a título oneroso, na constância do casamento. Não entram no cálculo:</p>
+        <ul>
+          <li>Bens anteriores ao casamento</li>
+          <li>Bens recebidos por herança ou doação durante o casamento</li>
+          <li>Bens adquiridos com o produto de bens anteriores (<span class="termo" data-def="Substituição de um bem por outro, mantendo as mesmas características jurídicas do original." tabindex="0">sub-rogação</span>)</li>
+        </ul>
+        <h3>Para Quem Este Regime é Indicado?</h3>
+        <ul>
+          <li>Casais onde um dos cônjuges tem rendimentos muito superiores e deseja manter autonomia, mas com garantia mútua ao final</li>
+          <li>Profissionais liberais e empresários que precisam de liberdade para gerir seus negócios</li>
+          <li>Casais que desejam independência financeira durante o casamento, mas querem garantia de partilha equitativa ao final</li>
+          <li>Casais que possuem extremo controle financeiro, organização e acompanhamento contábil</li>
+        </ul>
+        <h3>Desvantagens</h3>
+        <div class="callout warning">
+          <div class="callout-label">Atenção</div>
+          <p>A principal dificuldade é a complexidade do cálculo dos aquestos ao final do casamento. Exige contabilidade detalhada do patrimônio de cada cônjuge ao longo dos anos, o que pode gerar litígios e necessidade de perícia contábil em caso de divórcio litigioso.</p>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 6 — INTERACTIVE COMPARISON -->
+    <section id="cap6" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">06</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 6</div>
+          <h2 class="chapter-title">Quadro Comparativo dos Regimes</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Para facilitar a compreensão e a tomada de decisão, veja o quadro comparativo interativo entre os quatro regimes de bens...</p>
+      <div class="chapter-body">
+        <p>Para facilitar a compreensão e a tomada de decisão, apresento abaixo um quadro comparativo entre os quatro regimes de bens. Filtre por regime para destacar as informações:</p>
+        <div class="compare-table-wrap">
+          <div class="compare-filters">
+            <button class="compare-filter-btn active" onclick="filterCompare('all', this)">Todos</button>
+            <button class="compare-filter-btn" onclick="filterCompare('parcial', this)">Comunhão Parcial</button>
+            <button class="compare-filter-btn" onclick="filterCompare('universal', this)">Comunhão Universal</button>
+            <button class="compare-filter-btn" onclick="filterCompare('separacao', this)">Separação de Bens</button>
+            <button class="compare-filter-btn" onclick="filterCompare('aquestos', this)">Part. Final Aquestos</button>
+          </div>
+          <div class="compare-grid" id="compare-grid">
+            <!-- Rows injected by JS -->
+          </div>
+          <p class="compare-note">Este quadro é uma referência rápida. As particularidades de cada caso devem ser analisadas com um advogado especialista.</p>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 7 -->
+    <section id="cap7" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">07</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 7</div>
+          <h2 class="chapter-title">Como Escolher o Regime Ideal</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Não existe um regime de bens perfeito para todos os casais. A escolha depende de fatores pessoais, patrimoniais e familiares...</p>
+      <div class="chapter-body">
+        <p>Não existe um regime de bens perfeito para todos os casais. A escolha depende de uma série de fatores pessoais, patrimoniais e familiares. A seguir, apresento um guia prático para orientar essa decisão.</p>
+        <h3>Perguntas-Chave para o Casal</h3>
+        <p>Antes de decidir, responda honestamente às seguintes perguntas:</p>
+        <ul>
+          <li>Cada um possui patrimônio individual significativo antes do casamento?</li>
+          <li>Existe grande diferença de renda entre os cônjuges?</li>
+          <li>Um dos cônjuges possui dívidas ou restrições financeiras?</li>
+          <li>Algum dos cônjuges tem filhos de relacionamentos anteriores?</li>
+          <li>Existe uma empresa familiar envolvida?</li>
+          <li>Os familiares de algum dos cônjuges fizeram doações com cláusula de incomunicabilidade?</li>
+          <li>Como o casal planeja organizar as finanças no dia a dia?</li>
+        </ul>
+        <h3>Perfis de Casais e Regimes Sugeridos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Perfil do Casal</th><th>Regime Sugerido</th><th>Motivo</th></tr></thead>
+            <tbody>
+              <tr><td>Sem patrimônio relevante, recomeço conjunto</td><td>Comunhão Parcial</td><td>Simples, justo e automático</td></tr>
+              <tr><td>Ambos com grande patrimônio e empresa</td><td>Separação de Bens</td><td>Proteção patrimonial e autonomia</td></tr>
+              <tr><td>Um com muito patrimônio, outro sem</td><td>Part. Final nos Aquestos ou Separação</td><td>Equilíbrio e proteção</td></tr>
+              <tr><td>Casamento tardio com filhos de outras relações</td><td>Separação de Bens</td><td>Protege em partes a herança dos filhos</td></tr>
+              <tr><td>Um dos cônjuges com dívidas</td><td>Separação de Bens</td><td>Protege o cônjuge sem dívidas</td></tr>
+              <tr><td>Casal jovem, patrimônio equivalente</td><td>Comunhão Parcial</td><td>Divisão justa do que construírem juntos</td></tr>
+              <tr><td>Casal com empresa em expansão</td><td>Part. Final nos Aquestos</td><td>Autonomia com proteção ao final</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- QUIZ INTERATIVO -->
+        <h3>Quiz: Qual Regime Combina com Você?</h3>
+        <p>Responda às perguntas abaixo para receber uma sugestão personalizada de regime de bens com base no seu perfil.</p>
+
+        <div class="quiz-wrap" id="quiz">
+          <div class="quiz-header">
+            <div class="quiz-header-icon">🎯</div>
+            <div class="quiz-header-text">
+              <div class="quiz-header-label">Quiz Interativo</div>
+              <div class="quiz-header-title">Qual regime de bens é o seu?</div>
+              <div class="quiz-header-sub">8 perguntas · resultado imediato · sem cadastro</div>
+            </div>
+          </div>
+          <div class="quiz-progress-bar-wrap">
+            <div class="quiz-progress-bar-fill" id="quiz-progress-fill"></div>
+          </div>
+
+          <div class="quiz-body" id="quiz-body">
+
+            <!-- Pergunta 1 -->
+            <div class="quiz-step active" data-step="1">
+              <div class="quiz-step-num">Pergunta 1 de 8</div>
+              <div class="quiz-question">Você possui patrimônio relevante (imóvel, empresa, investimentos) adquirido <em>antes</em> do casamento?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, tenho patrimônio significativo que quero preservar
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Tenho alguns bens, mas nada muito expressivo
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'universal')">
+                  <span class="quiz-option-dot"></span>
+                  Não tenho patrimônio relevante antes do casamento
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <span class="quiz-counter">1 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 2 -->
+            <div class="quiz-step" data-step="2">
+              <div class="quiz-step-num">Pergunta 2 de 8</div>
+              <div class="quiz-question">Você ou seu parceiro(a) possui <em>dívidas</em> ou restrições financeiras relevantes?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Sim — uma das partes tem dívidas consideráveis
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Não, nenhum de nós tem dívidas relevantes
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'aquestos')">
+                  <span class="quiz-option-dot"></span>
+                  Temos dívidas pontuais, mas nada preocupante
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">2 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 3 -->
+            <div class="quiz-step" data-step="3">
+              <div class="quiz-step-num">Pergunta 3 de 8</div>
+              <div class="quiz-question">Algum de vocês possui ou pretende ter uma <em>empresa</em> ou participação societária?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, tenho ou pretendo ter empresa
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'aquestos')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, e quero autonomia mas com proteção mútua ao final
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Não temos empresa e não planejamos ter
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">3 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 4 -->
+            <div class="quiz-step" data-step="4">
+              <div class="quiz-step-num">Pergunta 4 de 8</div>
+              <div class="quiz-question">Existe <em>diferença significativa de renda</em> entre vocês?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, um de nós ganha muito mais — queremos divisão justa
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, e cada um quer manter sua independência financeira
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'universal')">
+                  <span class="quiz-option-dot"></span>
+                  Não, temos renda semelhante e queremos unir tudo
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">4 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 5 -->
+            <div class="quiz-step" data-step="5">
+              <div class="quiz-step-num">Pergunta 5 de 8</div>
+              <div class="quiz-question">Algum de vocês tem <em>filhos de relacionamento anterior</em>?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, e quero proteger a herança deles
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, mas não me preocupo com essa questão
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'universal')">
+                  <span class="quiz-option-dot"></span>
+                  Não, nenhum de nós tem filhos de outros relacionamentos
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">5 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 6 -->
+            <div class="quiz-step" data-step="6">
+              <div class="quiz-step-num">Pergunta 6 de 8</div>
+              <div class="quiz-question">Como vocês planejam <em>administrar as finanças</em> no dia a dia?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Cada um administra o seu — independência total
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Misturamos o que conquistarmos juntos, mas guardamos o que já tínhamos
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'universal')">
+                  <span class="quiz-option-dot"></span>
+                  Tudo junto — conta única, patrimônio compartilhado desde o início
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">6 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 7 -->
+            <div class="quiz-step" data-step="7">
+              <div class="quiz-step-num">Pergunta 7 de 8</div>
+              <div class="quiz-question">Você recebeu ou espera receber <em>herança ou doação</em> de familiares?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, e quero que fique exclusivamente no meu nome
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Sim, mas não me importo em compartilhar dependendo da situação
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'universal')">
+                  <span class="quiz-option-dot"></span>
+                  Não espero herança relevante ou quero que tudo seja de ambos
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">7 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="nextStep()">Próxima →</button>
+              </div>
+            </div>
+
+            <!-- Pergunta 8 -->
+            <div class="quiz-step" data-step="8">
+              <div class="quiz-step-num">Pergunta 8 de 8</div>
+              <div class="quiz-question">Em uma palavra, qual <em>valor</em> vocês mais priorizam no casamento?</div>
+              <div class="quiz-options">
+                <button class="quiz-option" onclick="selectOption(this, 'sep')">
+                  <span class="quiz-option-dot"></span>
+                  Proteção — quero resguardar o que cada um já conquistou
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'parcial')">
+                  <span class="quiz-option-dot"></span>
+                  Equilíbrio — dividir o que construirmos juntos, mas não o passado
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'universal')">
+                  <span class="quiz-option-dot"></span>
+                  União — queremos que tudo seja completamente compartilhado
+                </button>
+                <button class="quiz-option" onclick="selectOption(this, 'aquestos')">
+                  <span class="quiz-option-dot"></span>
+                  Autonomia — independência no dia a dia com partilha justa ao final
+                </button>
+              </div>
+              <div class="quiz-nav">
+                <button class="quiz-btn quiz-btn-back" onclick="prevStep()">← Voltar</button>
+                <span class="quiz-counter">8 / 8</span>
+                <button class="quiz-btn quiz-btn-next" onclick="showQuizResult()">Ver Resultado →</button>
+              </div>
+            </div>
+
+          </div><!-- /quiz-body -->
+
+          <!-- RESULTADO -->
+          <div class="quiz-result" id="quiz-result">
+            <div class="quiz-result-badge">✦ Seu resultado</div>
+            <div class="quiz-result-title" id="quiz-result-title"></div>
+            <div class="quiz-result-sub" id="quiz-result-sub"></div>
+            <div class="quiz-result-desc" id="quiz-result-desc"></div>
+            <div class="quiz-result-pros">
+              <div class="quiz-result-pros-title">Por que este regime pode ser o seu</div>
+              <ul id="quiz-result-pros-list"></ul>
+            </div>
+            <div class="quiz-result-cta" id="quiz-result-cta"></div>
+            <button class="quiz-restart-btn" onclick="restartQuiz()">↺ Refazer o quiz</button>
+          </div>
+
+        </div><!-- /quiz-wrap -->
+
+        <h3>A Importância da Assessoria Jurídica</h3>
+        <p>A escolha do regime de bens é uma decisão jurídica com reflexos patrimoniais de longo prazo. Mesmo que o casal tenha uma ideia inicial de qual regime prefere, é fundamental consultar um advogado especializado em Direito de Família antes de assinar qualquer documento.</p>
+        <div class="callout gold">
+          <div class="callout-label">Lembre-se</div>
+          <p>O advogado não é apenas aquele que resolve problemas depois que eles acontecem. Em planejamento patrimonial para casamento, o papel do advogado é preventivo — ele evita conflitos futuros e garante que a decisão tomada hoje seja a mais adequada para a realidade do casal.</p>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 8 -->
+    <section id="cap8" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">08</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 8</div>
+          <h2 class="chapter-title">Pacto Antenupcial</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">O Pacto Antenupcial é o documento formal pelo qual os noivos escolhem e regulamentam o regime de bens que vigorará em seu casamento...</p>
+      <div class="chapter-body">
+        <p>O Pacto Antenupcial é o documento formal pelo qual os noivos escolhem e regulamentam o regime de bens que vigorará em seu casamento. Se não for feito, aplica-se automaticamente a Comunhão Parcial de Bens.</p>
+        <h3>Quando o Pacto é Necessário?</h3>
+        <p>O Pacto Antenupcial é obrigatório sempre que os noivos desejarem adotar qualquer regime que não seja a Comunhão Parcial de Bens. Portanto, é necessário para:</p>
+        <ul>
+          <li>Comunhão Universal de Bens</li>
+          <li>Separação Convencional de Bens</li>
+          <li>Participação Final nos Aquestos</li>
+        </ul>
+        <h3>Como é Feito o Pacto Antenupcial?</h3>
+        <p>O Pacto Antenupcial deve ser feito por <span class="termo" data-def="Documento oficial lavrado em cartório de notas, com fé pública e validade jurídica." tabindex="0">escritura pública</span> em Cartório de Notas. Para que tenha validade perante terceiros, deve ser averbado no Registro Público do local de domicílio dos cônjuges e nos Registros de Imóveis onde possuam bens.</p>
+        <h3>O Que Pode Constar no Pacto?</h3>
+        <p>Além da escolha do regime de bens, o Pacto Antenupcial pode regular outras questões patrimoniais, tais como:</p>
+        <ul>
+          <li>Destinação de bens específicos em caso de divórcio ou morte</li>
+          <li>Regras sobre gestão de bens durante o casamento</li>
+          <li>Proteção de bens de filhos de casamentos anteriores</li>
+          <li>Cláusulas sobre negócios e participações societárias</li>
+        </ul>
+        <h3>O Pacto Antenupcial Pode Conter Qualquer Cláusula?</h3>
+        <p>Não. O Pacto Antenupcial não pode contrariar o que a legislação diz, os bons costumes e a ordem pública. Cláusulas que violem direitos fundamentais dos cônjuges ou que criem situações abusivas são nulas de pleno direito.</p>
+        <div class="callout warning">
+          <div class="callout-label">Prazo Importante</div>
+          <p>O Pacto Antenupcial deve ser celebrado <strong>ANTES</strong> da habilitação para o casamento e perde a validade se não for realizado o casamento posteriormente (art. 1.653, CC).</p>
+        </div>
+        <h3>Custos do Pacto Antenupcial</h3>
+        <p>Os custos variam conforme o estado e o cartório. Em geral, incluem <span class="termo" data-def="Taxas cobradas pelos cartórios pela prestação de serviços notariais e de registro." tabindex="0">emolumentos</span> cartorários para a lavratura da escritura pública e eventuais averbações em registros. Consulte antecipadamente o cartório da sua região.</p>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 9 -->
+    <section id="cap9" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">09</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 9</div>
+          <h2 class="chapter-title">Alteração do Regime Após o Casamento</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Muitos casais não sabem, mas é possível alterar o regime de bens após o casamento. Essa possibilidade está prevista no art. 1.639, §2° do Código Civil...</p>
+      <div class="chapter-body">
+        <p>Muitos casais não sabem, mas é possível alterar o regime de bens após o casamento. Essa possibilidade está prevista no art. 1.639, §2° do Código Civil.</p>
+        <h3>Como Funciona a Alteração?</h3>
+        <p>A alteração do regime de bens exige pedido judicial conjunto, ou seja, ambos os cônjuges devem concordar com a mudança. O juiz analisará se a alteração é motivada por razões legítimas e se não prejudica terceiros (credores, por exemplo).</p>
+        <h3>Requisitos para a Alteração</h3>
+        <ul>
+          <li>Requerimento conjunto de ambos os cônjuges</li>
+          <li>Pedido devidamente motivado</li>
+          <li>Ausência de prejuízo a terceiros</li>
+          <li>Autorização judicial — não basta acordo particular entre as partes</li>
+        </ul>
+        <h3>Efeitos da Alteração</h3>
+        <p>A alteração do regime de bens, em regra, tem efeitos a partir da alteração — seus efeitos não abrangerão atos e bens anteriores. Os bens adquiridos durante o regime anterior continuam regidos por ele. A partir da autorização judicial, o novo regime passa a valer para os bens adquiridos dali em diante.</p>
+        <p>Porém, há entendimento recente do Superior Tribunal de Justiça permitindo a alteração do regime de bens para que produza efeitos desde a época do casamento, ou seja, com efeitos retroativos — acontecendo apenas se a alteração visa ampliar o patrimônio do casal, e evitando prejuízo a terceiros credores. Exemplo: O STJ permitiu a alteração do regime de bens de separação total para a comunhão universal de bens.</p>
+        <div class="callout warning">
+          <div class="callout-label">Atenção</div>
+          <p>A jurisprudência dos tribunais superiores tem evoluído no sentido de exigir a publicação da autorização judicial em diários oficiais para que a mudança produza efeitos contra terceiros. Consulte um advogado para verificar os procedimentos.</p>
+        </div>
+        <h3>Quando Considerar a Alteração?</h3>
+        <ul>
+          <li>Quando um dos cônjuges tem alteração considerável em seu patrimônio</li>
+          <li>Quando resolvem começar uma atividade de alto risco que pode comprometer o patrimônio do casal</li>
+          <li>Quando desejam realizar um planejamento sucessório</li>
+          <li>Quando a visão do casal sobre a administração dos bens passa por alguma mudança</li>
+          <li>Quando desejam ampliar o compartilhamento de patrimônio entre si</li>
+        </ul>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 10 — FLIP CARDS -->
+    <section id="cap10" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">10</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 10</div>
+          <h2 class="chapter-title">Impactos Práticos — Casos Reais</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Para ilustrar como o regime de bens funciona na prática, veja situações comuns que chegam aos escritórios de advocacia. Clique nos cartões para ver a análise...</p>
+      <div class="chapter-body">
+        <p>Para ilustrar como o regime de bens funciona na prática, apresentamos a seguir situações comuns que chegam aos escritórios de advocacia. <em>Clique em cada cartão para revelar a análise jurídica.</em></p>
+        <div class="cases-grid">
+          <div class="case-card" onclick="this.classList.toggle('flipped')">
+            <div class="case-card-inner">
+              <div class="case-front">
+                <div class="case-num">01</div>
+                <div class="case-title">O Divórcio e o Apartamento</div>
+                <div class="case-situation">João e Maria se casaram em Comunhão Parcial. João tinha uma casa própria antes de casar. Após 8 anos e reformas no imóvel, decidiram se divorciar. Maria reivindicou metade do apartamento.</div>
+                <div class="case-flip-hint">Toque para ver a análise →</div>
+              </div>
+              <div class="case-back">
+                <div class="case-back-label">Análise Jurídica</div>
+                <div class="case-analysis">No regime de Comunhão Parcial, o apartamento adquirido antes do casamento é bem particular de João, pertencendo somente a ele. As benfeitorias com recursos de ambos podem gerar direito a indenização para Maria, mas o imóvel em si não passa a pertencer aos dois. João mantém a propriedade.</div>
+                <div class="case-back-hint">← Toque para voltar</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-card" onclick="this.classList.toggle('flipped')">
+            <div class="case-card-inner">
+              <div class="case-front">
+                <div class="case-num">02</div>
+                <div class="case-title">A Empresa Familiar</div>
+                <div class="case-situation">Joana é sócia de uma empresa que fundou antes de casar. Após o casamento, a empresa cresceu e passou a valer R$ 2 milhões. Em caso de divórcio, seu marido teria direito à metade?</div>
+                <div class="case-flip-hint">Toque para ver a análise →</div>
+              </div>
+              <div class="case-back">
+                <div class="case-back-label">Análise Jurídica</div>
+                <div class="case-analysis">No regime de Comunhão Parcial, a empresa fundada antes do casamento é bem particular de Joana. Contudo, a valorização ocorrida durante o casamento pode gerar discussão sobre frutos do esforço comum. Para evitar problemas, o ideal seria Pacto Antenupcial com Separação de Bens ou cláusulas específicas sobre a empresa.</div>
+                <div class="case-back-hint">← Toque para voltar</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-card" onclick="this.classList.toggle('flipped')">
+            <div class="case-card-inner">
+              <div class="case-front">
+                <div class="case-num">03</div>
+                <div class="case-title">A Herança Durante o Casamento</div>
+                <div class="case-situation">Carlos, casado em Comunhão Parcial, recebeu R$ 300.000,00 de herança de seu pai. Com esse dinheiro, comprou um terreno. Sua esposa tem direito à metade do terreno?</div>
+                <div class="case-flip-hint">Toque para ver a análise →</div>
+              </div>
+              <div class="case-back">
+                <div class="case-back-label">Análise Jurídica</div>
+                <div class="case-analysis">Não. A herança é bem particular e exclusivo de Carlos. O bem adquirido com o dinheiro da herança também não se comunica com o outro cônjuge, pois há a chamada sub-rogação — o terreno substitui a herança, mantendo a natureza de bem particular. Carlos deve guardar a documentação que comprove a origem dos recursos.</div>
+                <div class="case-back-hint">← Toque para voltar</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-card" onclick="this.classList.toggle('flipped')">
+            <div class="case-card-inner">
+              <div class="case-front">
+                <div class="case-num">04</div>
+                <div class="case-title">Dívida do Cônjuge</div>
+                <div class="case-situation">Helena se casou em Comunhão Parcial com José. Após o casamento, José fez um empréstimo pessoal sem comunicar Helena. Ele não pagou e os credores foram atrás dos bens do casal.</div>
+                <div class="case-flip-hint">Toque para ver a análise →</div>
+              </div>
+              <div class="case-back">
+                <div class="case-back-label">Análise Jurídica</div>
+                <div class="case-analysis">Em regra, a dívida contraída por um cônjuge para fins pessoais não compromete os bens exclusivos do outro. Contudo, os bens comuns do casal podem ser parcialmente atingidos. A situação pode ser contestada judicialmente caso se comprove que a dívida não reverteu em benefício da família.</div>
+                <div class="case-back-hint">← Toque para voltar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CAP 11 — CHECKLIST -->
+    <section id="cap11" class="chapter">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge">11</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Capítulo 11</div>
+          <h2 class="chapter-title">Checklist Pré-Casamento</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <p class="chapter-preview">Antes de oficializar a união, utilize este checklist para garantir que você tomou todas as providências necessárias em relação ao regime de bens...</p>
+      <div class="chapter-body">
+        <p>Antes de oficializar a união, utilize este checklist para garantir que você tomou todas as providências necessárias em relação ao regime de bens:</p>
+        <div class="checklist-counter">
+          <div class="checklist-progress"><div class="checklist-progress-bar" id="checklist-bar"></div></div>
+          <div class="checklist-count" id="checklist-count">0 / 15 itens</div>
+        </div>
+        <div class="checklist-section">
+          <div class="checklist-section-title">Para Noivos</div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Conversem abertamente sobre patrimônio, dívidas e expectativas financeiras</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Levante todos os bens que você possui antes do casamento e guarde a documentação</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Verifique se possui dívidas ativas e como elas podem impactar o cônjuge</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Faça a análise dos quatro regimes de bens e discuta com seu parceiro qual faz mais sentido</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Consulte um advogado especialista em Direito de Família</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Se optar por regime diferente da Comunhão Parcial, agende a lavratura do Pacto Antenupcial</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Providencie a <span class="termo" data-def="Registro de uma alteração ou informação adicional em um documento já existente, como uma matrícula de imóvel." tabindex="0">averbação</span> do pacto nos registros competentes</span>
+          </div>
+        </div>
+        <div class="checklist-section">
+          <div class="checklist-section-title">Para Advogados</div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Realize entrevista detalhada com o casal sobre a situação patrimonial de cada um</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Identifique bens, dívidas, participações societárias e heranças esperadas</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Oriente sobre as vantagens e desvantagens de cada regime conforme o perfil do casal</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Verifique se alguma das hipóteses de separação obrigatória se aplica</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Redija o Pacto Antenupcial com cláusulas claras e adaptadas à realidade do casal</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Oriente sobre a necessidade de averbação do pacto</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Esclareça os impactos do regime escolhido no Direito Sucessório</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box"></div>
+            <span class="check-label">Documente formalmente todas as orientações prestadas ao cliente</span>
+          </div>
+        </div>
+        <div class="callout gold">
+          <div class="callout-label">Dica de Ouro</div>
+          <p>A orientação é a forma mais eficiente de prevenir conflitos judiciais futuros. Um bom planejamento protege não apenas o patrimônio de cada um, mas também a saúde da própria relação do casal.</p>
+        </div>
+      </div>
+      <div class="chapter-divider"></div>
+    </section>
+
+    <!-- CONSIDERAÇÕES FINAIS -->
+    <section id="final" class="chapter open">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-badge final-badge">✦</div>
+        <div class="chapter-title-wrap">
+          <div class="chapter-label">Encerramento</div>
+          <h2 class="chapter-title">Considerações Finais</h2>
+        </div>
+        <div class="chapter-toggle">▾</div>
+      </div>
+      <div class="chapter-body">
+        <p>Chegamos ao fim deste guia com a expectativa de que o tema tenha ficado mais claro e acessível. O regime de bens não precisa ser um assunto complicado, reservado apenas aos profissionais do direito — ele diz respeito à vida real de casais reais e merece atenção de todos que planejam construir uma vida a dois.</p>
+        <p>Alguns pontos fundamentais para levar consigo:</p>
+        <ul>
+          <li>O regime de bens é definido antes do casamento e, uma vez escolhido, só pode ser alterado por decisão judicial</li>
+          <li>Se você não escolher um regime, isso significa optar pela Comunhão Parcial, que pode não ser o regime ideal para todos</li>
+          <li>O Pacto Antenupcial é um instrumento legal importante e não deve ser visto com desconfiança — é uma forma de respeito mútuo e transparência</li>
+          <li>Herança, dívidas e empresas familiares são aspectos que merecem atenção redobrada na escolha do regime</li>
+          <li>Consultar um advogado especializado é sempre o caminho mais seguro</li>
+        </ul>
+        <p>Se você é advogado, espero que este material tenha servido como um bom resumo e referência prática para suas consultas e orientações. Se você é um noivo ou alguém que vai se casar, espero que saia mais seguro para tomar essa decisão tão importante.</p>
+        <div class="final-section">
+          <div class="final-ornament">
+            <div class="final-ornament-line"></div>
+            <div class="final-ornament-dot"></div>
+            <div class="final-ornament-line"></div>
+          </div>
+          <p class="final-pull">"Casamentos felizes não são movidos apenas do amor — eles dependem também de transparência, planejamento e respeito mútuo. O regime de bens é, no fundo, a primeira grande decisão que um casal toma junto."</p>
+          <p style="text-align:center; color: var(--charcoal-light); font-size: 0.88rem; margin-bottom: 40px;">Bom casamento e ótimas escolhas!</p>
+          <div style="display:flex;justify-content:center;">
+            <div class="author-card">
+              <div class="author-avatar">T</div>
+              <div>
+                <div class="author-name">Thamirys Silvera Martin</div>
+                <div class="author-title">Advogada Especialista em Direito de Família</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">↑</button>
+
+<script>
+// --- PROGRESS BAR ---
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+  document.getElementById('progress-bar').style.width = (scrolled * 100) + '%';
+  // Back to top
+  document.getElementById('back-to-top').classList.toggle('visible', doc.scrollTop > 400);
+  // Active nav
+  updateActiveNav();
+});
+
+// --- CHAPTER TOGGLE ---
+function toggleChapter(header) {
+  const chapter = header.closest('.chapter');
+  chapter.classList.toggle('open');
+}
+
+// --- THEME ---
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? '' : 'dark');
+  document.getElementById('theme-btn').textContent = isDark ? '◐' : '○';
+}
+
+// --- MOBILE SIDEBAR ---
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menu-btn');
+  if (window.innerWidth <= 900 && !sidebar.contains(e.target) && e.target !== menuBtn) {
+    sidebar.classList.remove('open');
+  }
+});
+
+// --- ACTIVE NAV ---
+function updateActiveNav() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('data-section') === current);
+  });
+}
+
+// --- CHECKLIST ---
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  updateChecklist();
+}
+function updateChecklist() {
+  const items = document.querySelectorAll('.checklist-item');
+  const checked = document.querySelectorAll('.checklist-item.checked').length;
+  const total = items.length;
+  document.getElementById('checklist-count').textContent = checked + ' / ' + total + ' itens';
+  document.getElementById('checklist-bar').style.width = (checked / total * 100) + '%';
+}
+
+// --- COMPARE TABLE ---
+const compareData = [
+  {
+    criterion: 'Bens anteriores ao casamento',
+    parcial: 'Exclusivo de cada um',
+    universal: 'Comunicam-se',
+    separacao: 'Exclusivo de cada um',
+    aquestos: 'Exclusivo de cada um'
+  },
+  {
+    criterion: 'Bens adquiridos durante casamento',
+    parcial: 'Comuns (50/50)',
+    universal: 'Comuns (50/50)',
+    separacao: 'Exclusivo de quem adquiriu',
+    aquestos: 'Exclusivo, mas compensado ao final'
+  },
+  {
+    criterion: 'Herança e doações',
+    parcial: 'Exclusivo de quem recebeu',
+    universal: 'Comunicam-se (salvo cláusula específica)',
+    separacao: 'Exclusivo de quem recebeu',
+    aquestos: 'Exclusivo de quem recebeu'
+  },
+  {
+    criterion: 'Dívidas anteriores',
+    parcial: 'Não se comunicam, porém bens do casal podem ser atingidos (preservada a meação)',
+    universal: 'Comunicam-se (regra geral)',
+    separacao: 'Não se comunicam',
+    aquestos: 'Não se comunicam'
+  },
+  {
+    criterion: 'Dívidas durante casamento',
+    parcial: 'Comunicam-se se para a família',
+    universal: 'Comunicam-se',
+    separacao: 'Não se comunicam',
+    aquestos: 'Não se comunicam'
+  },
+  {
+    criterion: 'Precisa de pacto antenupcial',
+    parcial: 'Não (é o regime legal)',
+    universal: 'Sim',
+    separacao: 'Sim',
+    aquestos: 'Sim'
+  },
+  {
+    criterion: 'Autonomia patrimonial',
+    parcial: 'Parcial',
+    universal: 'Reduzida',
+    separacao: 'Total',
+    aquestos: 'Total (durante o casamento)'
+  },
+  {
+    criterion: 'Partilha ao final',
+    parcial: '50% dos bens adquiridos em conjunto',
+    universal: '50% de tudo',
+    separacao: 'Não há partilha',
+    aquestos: '50% da diferença dos aquestos'
+  }
+];
+
+let activeFilter = 'all';
+const colKeys = ['parcial', 'universal', 'separacao', 'aquestos'];
+const colLabels = ['Comunhão Parcial', 'Comunhão Universal', 'Separação de Bens', 'Part. Final Aquestos'];
+
+function renderCompare() {
+  const grid = document.getElementById('compare-grid');
+  if (!grid) return;
+  grid.innerHTML = compareData.map(row => {
+    const values = colKeys.map((key, i) => {
+      const isHighlighted = activeFilter !== 'all' && activeFilter === key;
+      const isHidden = activeFilter !== 'all' && activeFilter !== key;
+      return `<div class="compare-value ${isHighlighted ? 'highlighted' : ''} ${isHidden ? 'hidden-col' : ''}">
+        <div class="compare-value-label">${colLabels[i]}</div>
+        ${row[key]}
+      </div>`;
+    }).join('');
+    return `<div class="compare-row">
+      <div class="compare-criterion">${row.criterion}</div>
+      <div class="compare-values">${values}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterCompare(filter, btn) {
+  activeFilter = filter;
+  document.querySelectorAll('.compare-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCompare();
+}
+
+
+// ===== TOOLTIP MOBILE TAP =====
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.termo').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var active = el.classList.contains('active');
+      document.querySelectorAll('.termo.active').forEach(function(t) { t.classList.remove('active'); });
+      if (!active) el.classList.add('active');
+    });
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.termo.active').forEach(function(t) { t.classList.remove('active'); });
+  });
+});
+// ===== END TOOLTIP MOBILE TAP =====
+
+// ===== QUIZ LOGIC =====
+(function() {
+  const TOTAL = 8;
+  let currentStep = 1;
+  let answers = {};
+
+  const results = {
+    parcial: {
+      title: 'Comunhão Parcial de Bens',
+      em: 'o regime do equilíbrio',
+      sub: 'O regime mais comum no Brasil — e o que melhor se encaixa no seu perfil.',
+      desc: 'Suas respostas indicam um perfil que valoriza o que foi construído em conjunto, sem abrir mão do que cada um já tinha antes. A Comunhão Parcial faz exatamente isso: o patrimônio anterior ao casamento permanece de cada um; o que for adquirido durante a união pertence a ambos em igual proporção.',
+      pros: [
+        'Protege bens adquiridos antes do casamento',
+        'Divide de forma justa o que for construído juntos',
+        'É o regime automático — não exige Pacto Antenupcial',
+        'Amplamente reconhecido pelos tribunais brasileiros',
+        'Equilibra independência e parceria patrimonial'
+      ],
+      cta: '<strong>Próximo passo:</strong> Confirme com um advogado de família se a Comunhão Parcial é adequada para as especificidades do seu caso. Se houver empresa, herança ou filhos de outros relacionamentos, pode haver ajustes necessários.'
+    },
+    universal: {
+      title: 'Comunhão Universal de Bens',
+      em: 'o regime da união total',
+      sub: 'Para casais que querem unir passado, presente e futuro patrimonial.',
+      desc: 'Suas respostas apontam para um perfil que prioriza a vida compartilhada em todos os aspectos, inclusive o patrimonial. Na Comunhão Universal, tudo se mistura: bens anteriores ao casamento, adquiridos durante e até dívidas — tudo passa a ser de ambos. É o regime do "tudo junto".',
+      pros: [
+        'Simplifica a gestão do patrimônio do casal',
+        'Reforça a ideia de parceria total na vida a dois',
+        'Adequado para casais sem patrimônio individual relevante',
+        'Divisão clara em caso de dissolução: metade para cada um',
+        'Tradição consolidada no Direito de Família brasileiro'
+      ],
+      cta: '<strong>Atenção:</strong> Na Comunhão Universal, as dívidas anteriores ao casamento também podem afetar o cônjuge. Exige Pacto Antenupcial lavrado em cartório. Consulte um advogado antes de assinar.'
+    },
+    sep: {
+      title: 'Separação de Bens',
+      em: 'o regime da proteção patrimonial',
+      sub: 'Para quem prioriza autonomia e proteção do que já construiu.',
+      desc: 'Suas respostas indicam um perfil que valoriza a independência patrimonial e a proteção de bens individuais. Na Separação de Bens, cada cônjuge mantém a propriedade exclusiva de tudo — antes e durante o casamento. Não há comunicação de patrimônio nem de dívidas.',
+      pros: [
+        'Proteção total de patrimônio pré-casamento',
+        'Dívidas de um cônjuge não comprometem o outro',
+        'Ideal para quem tem empresa, herança ou filhos de outros relacionamentos',
+        'Máxima autonomia financeira dentro do casamento',
+        'Protege herdeiros de relacionamentos anteriores'
+      ],
+      cta: '<strong>Atenção:</strong> A Separação de Bens exige Pacto Antenupcial. Existe também a Separação Obrigatória (imposta por lei em alguns casos), com regras diferentes. Um advogado vai explicar qual se aplica ao seu caso e os impactos sucessórios.'
+    },
+    aquestos: {
+      title: 'Participação Final nos Aquestos',
+      em: 'o regime da autonomia com proteção',
+      sub: 'O regime mais sofisticado — e o que melhor equilibra independência e partilha justa.',
+      desc: 'Suas respostas sugerem um perfil que quer autonomia no dia a dia, mas com a segurança de uma divisão justa caso o casamento se dissolva. A Participação Final nos Aquestos funciona como Separação Total durante o casamento, mas ao final, o que cada um acumulou durante a união é dividido igualmente.',
+      pros: [
+        'Autonomia financeira plena durante o casamento',
+        'Partilha justa do que foi acumulado em conjunto ao final',
+        'Excelente para casais empresários ou com carreiras independentes',
+        'Dívidas de um não comprometem o outro durante a união',
+        'Equilíbrio entre independência e reconhecimento da parceria'
+      ],
+      cta: '<strong>Atenção:</strong> Este é o regime mais complexo e menos conhecido. Exige Pacto Antenupcial detalhado e é altamente recomendado consultar um advogado especialista em Direito de Família para estruturá-lo corretamente.'
+    }
+  };
+
+  function getScore() {
+    const count = { parcial: 0, universal: 0, sep: 0, aquestos: 0 };
+    Object.values(answers).forEach(v => { if (count[v] !== undefined) count[v]++; });
+    return Object.entries(count).sort((a, b) => b[1] - a[1])[0][0];
+  }
+
+  window.selectOption = function(btn, value) {
+    const step = btn.closest('.quiz-step');
+    step.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[currentStep] = value;
+  };
+
+  window.nextStep = function() {
+    if (!answers[currentStep]) {
+      const step = document.querySelector('.quiz-step.active');
+      step.querySelectorAll('.quiz-option')[0].style.animation = 'none';
+      // gentle pulse to remind
+      step.style.outline = '1px solid var(--bronze)';
+      setTimeout(() => step.style.outline = '', 600);
+      return;
+    }
+    if (currentStep >= TOTAL) return;
+    document.querySelector('.quiz-step.active').classList.remove('active');
+    currentStep++;
+    document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
+    updateProgress();
+  };
+
+  window.prevStep = function() {
+    if (currentStep <= 1) return;
+    document.querySelector('.quiz-step.active').classList.remove('active');
+    currentStep--;
+    document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
+    updateProgress();
+  };
+
+  window.showQuizResult = function() {
+    if (!answers[currentStep]) {
+      const step = document.querySelector('.quiz-step.active');
+      step.style.outline = '1px solid var(--bronze)';
+      setTimeout(() => step.style.outline = '', 600);
+      return;
+    }
+    const winner = getScore();
+    const r = results[winner];
+    document.getElementById('quiz-body').style.display = 'none';
+    const res = document.getElementById('quiz-result');
+    document.getElementById('quiz-result-title').innerHTML = `${r.title}<br><em>${r.em}</em>`;
+    document.getElementById('quiz-result-sub').textContent = r.sub;
+    document.getElementById('quiz-result-desc').textContent = r.desc;
+    const ul = document.getElementById('quiz-result-pros-list');
+    ul.innerHTML = r.pros.map(p => `<li>${p}</li>`).join('');
+    document.getElementById('quiz-result-cta').innerHTML = r.cta;
+    res.classList.add('active');
+    document.getElementById('quiz-progress-fill').style.width = '100%';
+  };
+
+  window.restartQuiz = function() {
+    currentStep = 1; answers = {};
+    document.querySelector('.quiz-step.active')?.classList.remove('active');
+    document.querySelector('[data-step="1"]').classList.add('active');
+    document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    document.getElementById('quiz-body').style.display = '';
+    document.getElementById('quiz-result').classList.remove('active');
+    updateProgress();
+  };
+
+  function updateProgress() {
+    const pct = ((currentStep - 1) / TOTAL) * 100;
+    document.getElementById('quiz-progress-fill').style.width = pct + '%';
+  }
+})();
+// ===== END QUIZ =====
+
+// ===== PASSWORD PROTECTION =====
+// Para alterar a senha, mude o valor abaixo:
+const EBOOK_PASSWORD = '8956regimedebens';
+
+function tryUnlock() {
+  const input = document.getElementById('lock-input');
+  const errorEl = document.getElementById('lock-error');
+  const val = input.value.trim();
+
+  if (val === EBOOK_PASSWORD) {
+    errorEl.textContent = '';
+    const lock = document.getElementById('lock-screen');
+    lock.classList.add('unlocked');
+    document.body.classList.remove('locked');
+    document.body.classList.add('unlocked');
+    // store session so reload doesn't re-lock (session only, closes with tab)
+    sessionStorage.setItem('ebook_unlocked', '1');
+  } else {
+    input.classList.remove('error');
+    void input.offsetWidth; // reflow to restart animation
+    input.classList.add('error');
+    errorEl.textContent = 'Código incorreto. Verifique seu e-mail de compra.';
+    input.value = '';
+    input.focus();
+    setTimeout(() => input.classList.remove('error'), 500);
+  }
+}
+
+function toggleLockEye(btn) {
+  const input = document.getElementById('lock-input');
+  if (input.style.webkitTextSecurity === 'none') {
+    input.style.webkitTextSecurity = 'disc';
+    input.type = 'password';
+    btn.textContent = '👁';
+  } else {
+    input.style.webkitTextSecurity = 'none';
+    input.type = 'text';
+    btn.textContent = '🙈';
+  }
+}
+
+// Check if already unlocked this session
+(function checkSession() {
+  if (sessionStorage.getItem('ebook_unlocked') === '1') {
+    document.getElementById('lock-screen').classList.add('unlocked');
+    document.body.classList.remove('locked');
+    document.body.classList.add('unlocked');
+  }
+})();
+// ===== END PASSWORD PROTECTION =====
+
+// --- INIT ---
+document.addEventListener('DOMContentLoaded', () => {
+  renderCompare();
+  updateChecklist();
+  // Smooth scroll for nav links
+  document.querySelectorAll('.sidebar-nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        // Open chapter if closed
+        const chapter = target.closest('.chapter') || target;
+        if (chapter && !chapter.classList.contains('open')) {
+          chapter.classList.add('open');
+        }
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
+      }
+      if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+});
+</script>
+</body>
+</html>
